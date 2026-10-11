@@ -828,7 +828,223 @@
 })();
 </script>
 <!-- END OXYFANN INTERACTIVE PARTICLES -->
-  
+  <!-- OXYFANN MATRIX RAIN TERMINAL -->
+<section id="oxy-matrix">
+  <div class="oxy-matrix-header">
+    <span class="oxy-matrix-dot"></span>
+    <span>OXYFANN // MATRIX TERMINAL</span>
+    <span class="oxy-matrix-live">● ONLINE</span>
+  </div>
+
+  <div class="oxy-matrix-screen">
+    <canvas id="oxy-matrix-canvas"></canvas>
+    <div class="oxy-matrix-label">
+      <div class="oxy-matrix-title">MATRIX RAIN</div>
+      <div class="oxy-matrix-subtitle">
+        DIGITAL VISUAL SYSTEM
+      </div>
+    </div>
+  </div>
+
+  <div class="oxy-matrix-controls">
+    <button id="oxy-matrix-toggle">Matikan Efek</button>
+    <label>
+      Kecepatan
+      <input id="oxy-matrix-speed"
+        type="range" min="1" max="5" value="2">
+    </label>
+  </div>
+
+  <p class="oxy-matrix-note">
+    > Visual effect aktif — bukan aktivitas peretasan sungguhan.
+  </p>
+</section>
+
+<style>
+#oxy-matrix {
+  margin: 28px auto;
+  padding: 16px;
+  max-width: 720px;
+  color: #00ff88;
+  background: #050b08;
+  border: 1px solid #087a43;
+  border-radius: 14px;
+  font-family: monospace;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0 0 18px #00ff8820;
+}
+#oxy-matrix * { box-sizing: border-box; }
+.oxy-matrix-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 11px;
+  letter-spacing: 1px;
+  padding-bottom: 12px;
+}
+.oxy-matrix-dot {
+  width: 9px;
+  height: 9px;
+  background: #00ff88;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00ff88;
+}
+.oxy-matrix-live { margin-left: auto; }
+.oxy-matrix-screen {
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid #075c35;
+  border-radius: 8px;
+}
+#oxy-matrix-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.oxy-matrix-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  text-shadow: 0 0 12px #00ff88;
+}
+.oxy-matrix-title {
+  font-size: clamp(22px, 6vw, 38px);
+  font-weight: bold;
+  letter-spacing: 4px;
+}
+.oxy-matrix-subtitle {
+  margin-top: 8px;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+.oxy-matrix-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 12px;
+}
+#oxy-matrix button {
+  padding: 10px 13px;
+  color: #00ff88;
+  background: #07180f;
+  border: 1px solid #00a85a;
+  border-radius: 7px;
+  font-family: monospace;
+  cursor: pointer;
+}
+#oxy-matrix input { accent-color: #00ff88; }
+.oxy-matrix-note {
+  margin: 13px 0 0;
+  color: #72c99b;
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+</style>
+
+<script>
+(function () {
+  const panel = document.getElementById("oxy-matrix");
+  if (!panel || panel.dataset.ready) return;
+  panel.dataset.ready = "1";
+
+  const canvas = document.getElementById("oxy-matrix-canvas");
+  const ctx = canvas.getContext("2d");
+  const toggle = document.getElementById("oxy-matrix-toggle");
+  const speed = document.getElementById("oxy-matrix-speed");
+
+  const chars = "アイウエオカキクケコサシスセソ0123456789ABCDEF";
+  let drops = [];
+  let columns = 0;
+  let running = true;
+  let frame = 0;
+  let lastTime = 0;
+  let animationId = null;
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+    canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    columns = Math.ceil(rect.width / 12);
+    drops = Array.from(
+      { length: columns },
+      () => Math.random() * (rect.height / 12)
+    );
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, rect.width, rect.height);
+  }
+
+  function draw(time) {
+    if (!running) return;
+
+    animationId = requestAnimationFrame(draw);
+    const interval = 110 - Number(speed.value) * 17;
+    if (time - lastTime < interval) return;
+    lastTime = time;
+
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+
+    ctx.fillStyle = "rgba(0, 0, 0, 0.09)";
+    ctx.fillRect(0, 0, w, h);
+    ctx.font = "12px monospace";
+    ctx.fillStyle = "#00ff88";
+
+    for (let i = 0; i < columns; i++) {
+      const char = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillText(char, i * 12, drops[i] * 12);
+
+      if (drops[i] * 12 > h && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i] += 0.5 + Number(speed.value) * 0.12;
+    }
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
+    toggle.textContent = "Matikan Efek";
+    lastTime = 0;
+    animationId = requestAnimationFrame(draw);
+  }
+
+  function stop() {
+    running = false;
+    if (animationId !== null) cancelAnimationFrame(animationId);
+    animationId = null;
+    toggle.textContent = "Nyalakan Efek";
+  }
+
+  toggle.addEventListener("click", function () {
+    if (running) stop();
+    else start();
+  });
+
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(resize).observe(canvas);
+  } else {
+    window.addEventListener("resize", resize);
+  }
+
+  resize();
+  animationId = requestAnimationFrame(draw);
+})();
+</script>
+<!-- END OXYFANN MATRIX RAIN TERMINAL -->
 </body>
 </html>
 </body>
