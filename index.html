@@ -161,6 +161,219 @@
 </section>
 <!-- AKHIR KARTU PROFIL DIGITAL -->
 
+<!-- OXYFANN SYSTEM MONITOR -->
+<section id="oxy-monitor">
+  <div class="om-header">
+    <span class="om-dot"></span>
+    OXYFANN SYSTEM MONITOR
+    <span class="om-live">LIVE</span>
+  </div>
+
+  <div class="om-clock" id="om-clock">00:00:00</div>
+  <div class="om-date" id="om-date">Loading date...</div>
+
+  <div class="om-status">
+    <span class="om-pulse"></span>
+    ALL SYSTEMS OPERATIONAL
+  </div>
+
+  <div class="om-grid">
+    <div class="om-box">
+      <span class="om-label">SESSION UPTIME</span>
+      <strong id="om-uptime">00:00:00</strong>
+      <small>Time since panel opened</small>
+    </div>
+
+    <div class="om-box">
+      <span class="om-label">BROWSER STATUS</span>
+      <strong id="om-online">ONLINE</strong>
+      <small id="om-network">Checking connection...</small>
+    </div>
+
+    <div class="om-box">
+      <span class="om-label">DISPLAY MODE</span>
+      <strong id="om-theme">DARK UI</strong>
+      <small>Oxyfann interface</small>
+    </div>
+
+    <div class="om-box">
+      <span class="om-label">RUNTIME</span>
+      <strong id="om-runtime">ACTIVE</strong>
+      <small>Live browser clock</small>
+    </div>
+  </div>
+
+  <div class="om-footer">
+    <span>SYS.MONITOR v1.0</span>
+    <span id="om-tick">INITIALIZING...</span>
+  </div>
+</section>
+
+<style>
+#oxy-monitor {
+  max-width: 650px;
+  margin: 30px auto;
+  padding: 20px;
+  box-sizing: border-box;
+  color: #dffefa;
+  background: linear-gradient(145deg, #07121e, #0b1725);
+  border: 1px solid rgba(0,255,204,.35);
+  border-radius: 18px;
+  font-family: monospace;
+  box-shadow: 0 0 24px rgba(0,255,204,.09);
+}
+#oxy-monitor * { box-sizing: border-box; }
+#oxy-monitor .om-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #00ffcc;
+}
+#oxy-monitor .om-dot,
+#oxy-monitor .om-pulse {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  display: inline-block;
+  border-radius: 50%;
+  background: #00ff99;
+  box-shadow: 0 0 10px #00ff99;
+}
+#oxy-monitor .om-live {
+  margin-left: auto;
+  padding: 4px 7px;
+  border: 1px solid #00ff99;
+  border-radius: 5px;
+}
+#oxy-monitor .om-clock {
+  margin-top: 25px;
+  color: #00ffcc;
+  font-size: clamp(32px, 8vw, 48px);
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-shadow: 0 0 15px rgba(0,255,204,.3);
+  text-align: center;
+}
+#oxy-monitor .om-date {
+  margin: 8px 0 20px;
+  color: #9db6c7;
+  font-size: 12px;
+  text-align: center;
+}
+#oxy-monitor .om-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 6px;
+  margin-bottom: 15px;
+  background: rgba(0,255,153,.06);
+  border: 1px solid rgba(0,255,153,.2);
+  border-radius: 8px;
+  color: #00ff99;
+  font-size: 11px;
+}
+#oxy-monitor .om-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+#oxy-monitor .om-box {
+  min-width: 0;
+  padding: 14px 10px;
+  background: rgba(255,255,255,.025);
+  border: 1px solid rgba(120,180,210,.15);
+  border-radius: 10px;
+}
+#oxy-monitor .om-label {
+  display: block;
+  color: #8ca8ba;
+  font-size: 10px;
+  margin-bottom: 12px;
+}
+#oxy-monitor .om-box strong {
+  display: block;
+  color: #00ffcc;
+  font-size: clamp(14px, 4vw, 19px);
+  overflow-wrap: anywhere;
+}
+#oxy-monitor .om-box small {
+  display: block;
+  margin-top: 8px;
+  color: #718b9d;
+  font-size: 10px;
+  line-height: 1.5;
+}
+#oxy-monitor .om-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(120,180,210,.15);
+  color: #668697;
+  font-size: 10px;
+}
+@media (max-width: 360px) {
+  #oxy-monitor { padding: 13px; }
+  #oxy-monitor .om-grid { gap: 7px; }
+}
+</style>
+
+<script>
+(function () {
+  const root = document.getElementById("oxy-monitor");
+  if (!root || root.dataset.started === "yes") return;
+  root.dataset.started = "yes";
+
+  const el = id => document.getElementById(id);
+  const openedAt = Date.now();
+
+  function updateMonitor() {
+    const now = new Date();
+    const pad = n => String(n).padStart(2, "0");
+
+    el("om-clock").textContent =
+      pad(now.getHours()) + ":" +
+      pad(now.getMinutes()) + ":" +
+      pad(now.getSeconds());
+
+    el("om-date").textContent = now.toLocaleDateString(
+      undefined,
+      { weekday: "long", day: "numeric",
+        month: "long", year: "numeric" }
+    );
+
+    const elapsed = Math.floor((Date.now() - openedAt) / 1000);
+    el("om-uptime").textContent =
+      pad(Math.floor(elapsed / 3600)) + ":" +
+      pad(Math.floor((elapsed % 3600) / 60)) + ":" +
+      pad(elapsed % 60);
+
+    const online = navigator.onLine;
+    el("om-online").textContent = online ? "ONLINE" : "OFFLINE";
+    el("om-online").style.color = online ? "#00ffcc" : "#ff7b7b";
+    el("om-network").textContent =
+      online ? "Browser reports connected" : "No network connection reported";
+
+    el("om-theme").textContent = "DARK UI";
+    el("om-runtime").textContent = "ACTIVE";
+    el("om-tick").textContent = "LAST UPDATE " + pad(now.getSeconds());
+  }
+
+  updateMonitor();
+  window.setInterval(updateMonitor, 1000);
+
+  window.addEventListener("online", updateMonitor);
+  window.addEventListener("offline", updateMonitor);
+})();
+</script>
+<!-- END OXYFANN SYSTEM MONITOR -->
+  
 </body>
 </html>
 </body>
