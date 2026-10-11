@@ -1825,6 +1825,202 @@
 })();
 </script>
 <!-- END OXYFANN COMMAND CONSOLE -->
+<!-- OXYFANN FUTURISTIC DIGITAL ID CARD -->
+<section id="oxy-digital-id">
+  <style>
+    #oxy-digital-id {
+      margin: 35px auto;
+      padding: 20px;
+      max-width: 440px;
+      color: #e8faff;
+      font-family: Arial, sans-serif;
+    }
+
+    #oxy-digital-id .oxy-id-card {
+      position: relative;
+      overflow: hidden;
+      padding: 22px;
+      border: 1px solid #00eaff;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #071323, #102a40, #071323);
+      box-shadow: 0 0 18px #00d9ff35;
+    }
+
+    #oxy-digital-id .oxy-id-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #00eaff, #8b5cf6, #00eaff);
+    }
+
+    #oxy-digital-id .oxy-id-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      color: #00eaff;
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+
+    #oxy-digital-id .oxy-id-chip {
+      border: 1px solid #00eaff80;
+      border-radius: 6px;
+      padding: 5px 8px;
+    }
+
+    #oxy-digital-id .oxy-id-profile {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 25px 0 20px;
+    }
+
+    #oxy-digital-id .oxy-id-avatar {
+      width: 85px;
+      height: 85px;
+      flex-shrink: 0;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 2px solid #00eaff;
+      box-shadow: 0 0 15px #00eaff50;
+    }
+
+    #oxy-digital-id .oxy-id-name {
+      margin: 0 0 7px;
+      font-size: 23px;
+      overflow-wrap: anywhere;
+    }
+
+    #oxy-digital-id .oxy-id-handle {
+      color: #00eaff;
+      font-size: 14px;
+    }
+
+    #oxy-digital-id .oxy-id-label {
+      color: #8ca9bd;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      margin-bottom: 5px;
+    }
+
+    #oxy-digital-id .oxy-id-value {
+      font-size: 14px;
+      overflow-wrap: anywhere;
+    }
+
+    #oxy-digital-id .oxy-id-divider {
+      height: 1px;
+      background: #00eaff35;
+      margin: 17px 0;
+    }
+
+    #oxy-digital-id .oxy-id-status {
+      color: #65ffb0;
+      font-size: 12px;
+    }
+
+    #oxy-digital-id .oxy-id-button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 12px;
+      border: 1px solid #00eaff;
+      border-radius: 9px;
+      background: #00eaff12;
+      color: #00eaff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #oxy-digital-id .oxy-id-button:active {
+      background: #00eaff30;
+    }
+
+    #oxy-digital-id .oxy-id-footer {
+      margin-top: 17px;
+      color: #7895aa;
+      font-size: 10px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    @media (max-width: 360px) {
+      #oxy-digital-id .oxy-id-profile {
+        gap: 10px;
+      }
+
+      #oxy-digital-id .oxy-id-avatar {
+        width: 68px;
+        height: 68px;
+      }
+
+      #oxy-digital-id .oxy-id-name {
+        font-size: 19px;
+      }
+    }
+  </style>
+
+  <div class="oxy-id-card">
+    <div class="oxy-id-top">
+      <span>OXYFANN // DIGITAL ID</span>
+      <span class="oxy-id-chip">ID-001</span>
+    </div>
+
+    <div class="oxy-id-profile">
+      <img
+        class="oxy-id-avatar"
+        src="https://github.com/0xyfann.png"
+        alt="Oxyfann GitHub avatar"
+      >
+
+      <div>
+        <div class="oxy-id-label">IDENTITY HOLDER</div>
+        <h2 class="oxy-id-name">OXYFANN</h2>
+        <div class="oxy-id-handle">@0xyfann</div>
+      </div>
+    </div>
+
+    <div class="oxy-id-divider"></div>
+
+    <div class="oxy-id-label">DIGITAL PROFILE</div>
+    <div class="oxy-id-value">GitHub Creator Profile</div>
+
+    <div style="margin-top:15px">
+      <div class="oxy-id-label">ACCESS STATUS</div>
+      <div class="oxy-id-status">● PROFILE CARD ACTIVE</div>
+    </div>
+
+    <button
+      class="oxy-id-button"
+      type="button"
+      onclick="(async function(){
+        const text = 'OXYFANN | @0xyfann | https://github.com/0xyfann';
+        try {
+          await navigator.clipboard.writeText(text);
+          document.getElementById('oxy-id-copy-status').textContent = 'Berhasil disalin!';
+        } catch (e) {
+          document.getElementById('oxy-id-copy-status').textContent = 'Salin manual: https://github.com/0xyfann';
+        }
+      })()"
+    >COPY DIGITAL ID</button>
+
+    <div
+      id="oxy-id-copy-status"
+      role="status"
+      style="margin-top:10px;text-align:center;font-size:12px;color:#00eaff"
+    >Siap digunakan</div>
+
+    <div class="oxy-id-footer">
+      <span>OXYFANN SYSTEM</span>
+      <span>PERSONAL PROFILE</span>
+    </div>
+  </div>
+</section>
+<!-- END OXYFANN DIGITAL ID CARD -->
 </body>
 </html>
 </body>
