@@ -1045,6 +1045,146 @@
 })();
 </script>
 <!-- END OXYFANN MATRIX RAIN TERMINAL -->
+<!-- OXYFANN BOOT SEQUENCE -->
+<div id="oxy-boot-screen">
+  <div class="oxy-boot-box">
+    <div class="oxy-boot-brand">OXYFANN<span>_OS</span></div>
+    <div class="oxy-boot-line">INITIALIZING SYSTEM...</div>
+    <div class="oxy-boot-line">LOADING DIGITAL MODULES...</div>
+    <div class="oxy-boot-line">CHECKING INTERFACE...</div>
+    <div class="oxy-boot-line">ESTABLISHING CONNECTION...</div>
+
+    <div class="oxy-boot-progress">
+      <div id="oxy-boot-progress-fill"></div>
+    </div>
+
+    <div id="oxy-boot-status">BOOTING SYSTEM 0%</div>
+    <button id="oxy-boot-skip">LEWATI INTRO ▶</button>
+  </div>
+</div>
+
+<style>
+#oxy-boot-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px;
+  background: #020604;
+  color: #00ff88;
+  font-family: monospace;
+  transition: opacity .6s ease, visibility .6s ease;
+}
+#oxy-boot-screen.oxy-boot-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.oxy-boot-box {
+  width: 100%;
+  max-width: 480px;
+  padding: 24px;
+  border: 1px solid #087a43;
+  border-radius: 12px;
+  background: #050b08;
+  box-shadow: 0 0 30px #00ff881c;
+}
+.oxy-boot-brand {
+  margin-bottom: 25px;
+  font-size: clamp(26px, 7vw, 38px);
+  font-weight: bold;
+  letter-spacing: 4px;
+  text-shadow: 0 0 14px #00ff88;
+}
+.oxy-boot-brand span { color: #b4ffd6; }
+.oxy-boot-line {
+  margin: 13px 0;
+  color: #80d9a8;
+  font-size: 12px;
+  animation: oxyBootBlink 1.2s infinite alternate;
+}
+.oxy-boot-progress {
+  height: 7px;
+  margin-top: 27px;
+  overflow: hidden;
+  border: 1px solid #087a43;
+  border-radius: 8px;
+  background: #00180b;
+}
+#oxy-boot-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: #00ff88;
+  box-shadow: 0 0 12px #00ff88;
+  transition: width .15s linear;
+}
+#oxy-boot-status {
+  margin-top: 12px;
+  font-size: 11px;
+}
+#oxy-boot-skip {
+  margin-top: 24px;
+  padding: 10px 14px;
+  color: #00ff88;
+  background: #07180f;
+  border: 1px solid #00a85a;
+  border-radius: 6px;
+  font-family: monospace;
+  cursor: pointer;
+}
+@keyframes oxyBootBlink {
+  from { opacity: .55; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #oxy-boot-screen { transition: none; }
+  .oxy-boot-line { animation: none; }
+}
+</style>
+
+<script>
+(function () {
+  const screen = document.getElementById("oxy-boot-screen");
+  const fill = document.getElementById("oxy-boot-progress-fill");
+  const status = document.getElementById("oxy-boot-status");
+  const skip = document.getElementById("oxy-boot-skip");
+
+  if (!screen || screen.dataset.ready) return;
+  screen.dataset.ready = "1";
+
+  let progress = 0;
+  let closed = false;
+  let timer;
+
+  function closeBoot() {
+    if (closed) return;
+    closed = true;
+    clearInterval(timer);
+    screen.classList.add("oxy-boot-hidden");
+    setTimeout(function () {
+      screen.remove();
+    }, 700);
+  }
+
+  skip.addEventListener("click", closeBoot);
+
+  timer = setInterval(function () {
+    progress = Math.min(100, progress + Math.floor(Math.random() * 9) + 4);
+    fill.style.width = progress + "%";
+    status.textContent = progress < 100
+      ? "BOOTING SYSTEM " + progress + "%"
+      : "SYSTEM ONLINE ✓";
+
+    if (progress >= 100) {
+      clearInterval(timer);
+      setTimeout(closeBoot, 900);
+    }
+  }, 220);
+})();
+</script>
+<!-- END OXYFANN BOOT SEQUENCE -->
 </body>
 </html>
 </body>
