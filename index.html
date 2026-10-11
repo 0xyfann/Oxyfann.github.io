@@ -1528,6 +1528,303 @@
 })();
 </script>
 <!-- END OXYFANN CYBER PUZZLE GAME -->
+<!-- OXYFANN COMMAND CONSOLE -->
+<section id="oxy-command-console">
+  <div class="oxy-cc-header">
+    <span class="oxy-cc-light"></span>
+    OXYFANN // COMMAND CONSOLE
+    <span class="oxy-cc-online">READY</span>
+  </div>
+
+  <div class="oxy-cc-banner">
+    <pre>
+   ___  __  __ __   __
+  / _ \ \ \/ / \ \ / /
+ | (_) | >  <   \ V /
+  \___/ /_/\_\   \_/
+    </pre>
+    <p>INTERACTIVE LOCAL TERMINAL</p>
+  </div>
+
+  <div id="oxy-cc-output" aria-live="polite">
+    <div>> OXYFANN CONSOLE INITIALIZED</div>
+    <div>> Ketik <b>help</b> untuk melihat daftar perintah.</div>
+  </div>
+
+  <form id="oxy-cc-form" autocomplete="off">
+    <label for="oxy-cc-input">visitor@oxyfann:~$</label>
+    <div class="oxy-cc-input-row">
+      <input
+        id="oxy-cc-input"
+        type="text"
+        placeholder="Ketik perintah..."
+        maxlength="120"
+        autocomplete="off"
+        spellcheck="false"
+      >
+      <button type="submit">RUN ↵</button>
+    </div>
+  </form>
+
+  <div class="oxy-cc-shortcuts">
+    <button type="button" data-cmd="help">HELP</button>
+    <button type="button" data-cmd="about">ABOUT</button>
+    <button type="button" data-cmd="status">STATUS</button>
+    <button type="button" data-cmd="clear">CLEAR</button>
+  </div>
+
+  <div class="oxy-cc-footer">
+    LOCAL SIMULATION // NO EXTERNAL COMMAND EXECUTION
+  </div>
+</section>
+
+<style>
+#oxy-command-console {
+  max-width: 720px;
+  margin: 28px auto;
+  padding: 17px;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: #aaffcc;
+  background: #030806;
+  border: 1px solid #087a43;
+  border-radius: 14px;
+  font-family: monospace;
+  box-shadow: 0 0 22px #00ff8818;
+}
+#oxy-command-console * {
+  box-sizing: border-box;
+}
+#oxy-command-console .oxy-cc-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid #17442d;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+#oxy-command-console .oxy-cc-light {
+  width: 9px;
+  height: 9px;
+  background: #00ff88;
+  border-radius: 50%;
+  box-shadow: 0 0 9px #00ff88;
+}
+#oxy-command-console .oxy-cc-online {
+  margin-left: auto;
+  color: #00ff88;
+}
+#oxy-command-console .oxy-cc-banner {
+  margin: 17px 0;
+  padding: 12px 8px;
+  text-align: center;
+  background: #020402;
+  border: 1px solid #123e28;
+  border-radius: 8px;
+}
+#oxy-command-console .oxy-cc-banner pre {
+  margin: 0;
+  color: #00ff88;
+  font-size: clamp(10px, 3vw, 17px);
+  line-height: 1.2;
+  text-shadow: 0 0 10px #00ff8870;
+}
+#oxy-command-console .oxy-cc-banner p {
+  margin: 10px 0 0;
+  color: #70bd91;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+#oxy-command-console #oxy-cc-output {
+  height: 190px;
+  overflow-y: auto;
+  padding: 12px;
+  background: #000;
+  border: 1px solid #164d30;
+  border-radius: 7px;
+  font-size: 12px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+#oxy-command-console .oxy-cc-line {
+  margin: 0 0 5px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+#oxy-command-console .oxy-cc-command {
+  color: #00ff88;
+}
+#oxy-command-console .oxy-cc-error {
+  color: #ff9d9d;
+}
+#oxy-command-console .oxy-cc-muted {
+  color: #76a58a;
+}
+#oxy-command-console #oxy-cc-form {
+  margin-top: 16px;
+}
+#oxy-command-console #oxy-cc-form label {
+  display: block;
+  margin-bottom: 8px;
+  color: #00ff88;
+  font-size: 12px;
+}
+#oxy-command-console .oxy-cc-input-row {
+  display: flex;
+  gap: 8px;
+}
+#oxy-command-console #oxy-cc-input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  color: #00ff88;
+  background: #000;
+  border: 1px solid #167747;
+  border-radius: 7px;
+  font: 13px monospace;
+}
+#oxy-command-console button {
+  padding: 10px 13px;
+  color: #00ff88;
+  background: #071a10;
+  border: 1px solid #16864b;
+  border-radius: 7px;
+  font: bold 11px monospace;
+  cursor: pointer;
+}
+#oxy-command-console button:focus-visible,
+#oxy-command-console input:focus-visible {
+  outline: 2px solid #00ff88;
+  outline-offset: 2px;
+}
+#oxy-command-console .oxy-cc-shortcuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 12px;
+}
+#oxy-command-console .oxy-cc-footer {
+  margin-top: 17px;
+  color: #548969;
+  font-size: 9px;
+  line-height: 1.7;
+  text-align: center;
+}
+@media (max-width: 380px) {
+  #oxy-command-console {
+    padding: 11px;
+  }
+  #oxy-command-console .oxy-cc-input-row {
+    flex-direction: column;
+  }
+}
+</style>
+
+<script>
+(function () {
+  const root = document.getElementById("oxy-command-console");
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = "1";
+
+  const form = root.querySelector("#oxy-cc-form");
+  const input = root.querySelector("#oxy-cc-input");
+  const output = root.querySelector("#oxy-cc-output");
+
+  function line(text, className) {
+    const div = document.createElement("div");
+    div.className = "oxy-cc-line" + (className ? " " + className : "");
+    div.textContent = text;
+    output.appendChild(div);
+    output.scrollTop = output.scrollHeight;
+
+    while (output.children.length > 80) {
+      output.removeChild(output.firstChild);
+    }
+  }
+
+  function run(raw) {
+    const value = raw.trim();
+    if (!value) return;
+
+    line("visitor@oxyfann:~$ " + value, "oxy-cc-command");
+
+    const parts = value.split(/\s+/);
+    const cmd = parts[0].toLowerCase();
+    const arg = parts.slice(1).join(" ");
+
+    switch (cmd) {
+      case "help":
+        line("DAFTAR PERINTAH:");
+        line("help       - Daftar perintah");
+        line("about      - Tentang website");
+        line("date       - Tanggal dan waktu");
+        line("status     - Status browser");
+        line("skills     - Daftar fitur");
+        line("echo teks  - Tampilkan teks");
+        line("clear      - Bersihkan terminal");
+        break;
+
+      case "about":
+        line("OXYFANN PROFILE");
+        line("Website profil pribadi dengan fitur interaktif.");
+        line("Dibuat dengan HTML, CSS, dan JavaScript.");
+        break;
+
+      case "date":
+        line(new Date().toLocaleString());
+        break;
+
+      case "status":
+        line("Browser online: " + (navigator.onLine ? "YA" : "TIDAK"));
+        line("Bahasa browser: " + navigator.language);
+        line("Platform: " + (navigator.userAgentData?.platform || "Browser"));
+        break;
+
+      case "skills":
+        line("FITUR WEBSITE:");
+        line("- Digital Profile Card");
+        line("- System Monitor");
+        line("- Command Center");
+        line("- Particle Touch");
+        line("- Matrix Rain");
+        line("- Boot Sequence");
+        line("- Cyber Puzzle Game");
+        line("- Command Console");
+        break;
+
+      case "echo":
+        line(arg || "(tidak ada teks)");
+        break;
+
+      case "clear":
+        output.replaceChildren();
+        line("Terminal dibersihkan.");
+        break;
+
+      default:
+        line("Perintah tidak dikenal: " + cmd, "oxy-cc-error");
+        line("Ketik help untuk melihat daftar perintah.", "oxy-cc-muted");
+    }
+  }
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const value = input.value;
+    input.value = "";
+    run(value);
+  });
+
+  root.querySelectorAll("[data-cmd]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      run(button.dataset.cmd);
+    });
+  });
+})();
+</script>
+<!-- END OXYFANN COMMAND CONSOLE -->
 </body>
 </html>
 </body>
