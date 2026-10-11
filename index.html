@@ -2021,6 +2021,331 @@
   </div>
 </section>
 <!-- END OXYFANN DIGITAL ID CARD -->
+<!-- OXYFANN FUTURISTIC SKILL TREE -->
+<section id="oxy-skill-tree">
+  <style>
+    #oxy-skill-tree {
+      max-width: 650px;
+      margin: 35px auto;
+      padding: 20px;
+      color: #e5faff;
+      font-family: Arial, sans-serif;
+    }
+
+    #oxy-skill-tree * {
+      box-sizing: border-box;
+    }
+
+    #oxy-skill-tree .st-panel {
+      padding: 20px;
+      border: 1px solid #00eaff80;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #071323, #10243a);
+      box-shadow: 0 0 20px #00d9ff18;
+    }
+
+    #oxy-skill-tree .st-heading {
+      margin: 0;
+      color: #00eaff;
+      font-size: 23px;
+      text-align: center;
+    }
+
+    #oxy-skill-tree .st-subtitle {
+      margin: 8px 0 20px;
+      text-align: center;
+      color: #91aebe;
+      font-size: 12px;
+    }
+
+    #oxy-skill-tree .st-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    #oxy-skill-tree .st-stat {
+      padding: 12px;
+      border: 1px solid #00eaff40;
+      border-radius: 10px;
+      background: #00eaff08;
+    }
+
+    #oxy-skill-tree .st-label {
+      color: #8baabd;
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+    #oxy-skill-tree .st-number {
+      margin-top: 6px;
+      color: #00eaff;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    #oxy-skill-tree .st-progress {
+      height: 8px;
+      margin-top: 10px;
+      overflow: hidden;
+      border-radius: 20px;
+      background: #233b4b;
+    }
+
+    #oxy-skill-tree .st-progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #00eaff, #8b5cf6);
+      transition: width .35s ease;
+    }
+
+    #oxy-skill-tree .st-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    #oxy-skill-tree .st-skill {
+      padding: 15px;
+      border: 1px solid #29465a;
+      border-radius: 12px;
+      background: #071522;
+      transition: border-color .2s, transform .2s;
+    }
+
+    #oxy-skill-tree .st-skill.st-unlocked {
+      border-color: #00eaff;
+      box-shadow: inset 0 0 15px #00eaff0b;
+    }
+
+    #oxy-skill-tree .st-skill-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    #oxy-skill-tree .st-icon {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      flex-shrink: 0;
+      border: 1px solid #00eaff70;
+      border-radius: 10px;
+      color: #00eaff;
+      font-size: 21px;
+    }
+
+    #oxy-skill-tree .st-skill-name {
+      margin: 0 0 5px;
+      font-size: 15px;
+    }
+
+    #oxy-skill-tree .st-description {
+      color: #94acbc;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    #oxy-skill-tree .st-action {
+      margin-left: auto;
+      padding: 8px 10px;
+      border: 1px solid #00eaff;
+      border-radius: 8px;
+      background: #00eaff10;
+      color: #00eaff;
+      font-size: 11px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #oxy-skill-tree .st-action:disabled {
+      border-color: #43606f;
+      color: #8ba0ad;
+      cursor: default;
+    }
+
+    #oxy-skill-tree .st-reset {
+      width: 100%;
+      margin-top: 17px;
+      padding: 11px;
+      border: 1px solid #8b5cf6;
+      border-radius: 9px;
+      background: #8b5cf610;
+      color: #c5b4ff;
+      cursor: pointer;
+    }
+
+    #oxy-skill-tree .st-message {
+      min-height: 18px;
+      margin-top: 12px;
+      color: #65ffb0;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    @media (max-width: 400px) {
+      #oxy-skill-tree {
+        padding: 12px;
+      }
+
+      #oxy-skill-tree .st-panel {
+        padding: 14px;
+      }
+
+      #oxy-skill-tree .st-action {
+        padding: 7px;
+        font-size: 10px;
+      }
+    }
+  </style>
+
+  <div class="st-panel">
+    <h2 class="st-heading">⚡ SKILL TREE</h2>
+    <p class="st-subtitle">OXYFANN // CHARACTER DEVELOPMENT</p>
+
+    <div class="st-stats">
+      <div class="st-stat">
+        <div class="st-label">CURRENT LEVEL</div>
+        <div class="st-number" id="oxy-st-level">1</div>
+      </div>
+      <div class="st-stat">
+        <div class="st-label">SKILL POINTS</div>
+        <div class="st-number" id="oxy-st-points">5</div>
+      </div>
+    </div>
+
+    <div class="st-label">TOTAL SKILL PROGRESS</div>
+    <div class="st-progress">
+      <div class="st-progress-fill" id="oxy-st-fill"></div>
+    </div>
+    <p class="st-subtitle" id="oxy-st-progress-text">0 / 5 skills unlocked</p>
+
+    <div class="st-list">
+      <div class="st-skill" data-skill="0">
+        <div class="st-skill-top">
+          <div class="st-icon">⌨</div>
+          <div>
+            <h3 class="st-skill-name">Code Initiate</h3>
+            <div class="st-description">Memulai perjalanan coding.</div>
+          </div>
+          <button class="st-action" data-unlock="0">UNLOCK</button>
+        </div>
+      </div>
+
+      <div class="st-skill" data-skill="1">
+        <div class="st-skill-top">
+          <div class="st-icon">◇</div>
+          <div>
+            <h3 class="st-skill-name">Web Designer</h3>
+            <div class="st-description">Membangun tampilan website.</div>
+          </div>
+          <button class="st-action" data-unlock="1">UNLOCK</button>
+        </div>
+      </div>
+
+      <div class="st-skill" data-skill="2">
+        <div class="st-skill-top">
+          <div class="st-icon">⚙</div>
+          <div>
+            <h3 class="st-skill-name">JavaScript Core</h3>
+            <div class="st-description">Mengenal interaksi website.</div>
+          </div>
+          <button class="st-action" data-unlock="2">UNLOCK</button>
+        </div>
+      </div>
+
+      <div class="st-skill" data-skill="3">
+        <div class="st-skill-top">
+          <div class="st-icon">⌘</div>
+          <div>
+            <h3 class="st-skill-name">Terminal Master</h3>
+            <div class="st-description">Mempelajari perintah terminal.</div>
+          </div>
+          <button class="st-action" data-unlock="3">UNLOCK</button>
+        </div>
+      </div>
+
+      <div class="st-skill" data-skill="4">
+        <div class="st-skill-top">
+          <div class="st-icon">✦</div>
+          <div>
+            <h3 class="st-skill-name">Cyber Architect</h3>
+            <div class="st-description">Menyelesaikan jalur skill.</div>
+          </div>
+          <button class="st-action" data-unlock="4">UNLOCK</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="st-message" id="oxy-st-message" role="status">
+      Pilih skill untuk memulai!
+    </div>
+
+    <button class="st-reset" id="oxy-st-reset" type="button">
+      RESET SKILL TREE
+    </button>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById("oxy-skill-tree");
+      if (!root || root.dataset.initialized === "yes") return;
+      root.dataset.initialized = "yes";
+
+      const skills = Array(5).fill(false);
+      const level = root.querySelector("#oxy-st-level");
+      const points = root.querySelector("#oxy-st-points");
+      const fill = root.querySelector("#oxy-st-fill");
+      const progressText = root.querySelector("#oxy-st-progress-text");
+      const message = root.querySelector("#oxy-st-message");
+      const buttons = root.querySelectorAll("[data-unlock]");
+
+      function update() {
+        const count = skills.filter(Boolean).length;
+
+        level.textContent = String(1 + count);
+        points.textContent = String(5 - count);
+        fill.style.width = (count * 20) + "%";
+        progressText.textContent = count + " / 5 skills unlocked";
+
+        skills.forEach(function (unlocked, index) {
+          const card = root.querySelector('[data-skill="' + index + '"]');
+          const button = buttons[index];
+
+          card.classList.toggle("st-unlocked", unlocked);
+          button.textContent = unlocked ? "UNLOCKED" : "UNLOCK";
+          button.disabled = unlocked;
+        });
+      }
+
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          const index = Number(button.dataset.unlock);
+          if (skills[index]) return;
+
+          skills[index] = true;
+          message.textContent =
+            "Skill berhasil dibuka: " +
+            button.closest(".st-skill")
+              .querySelector(".st-skill-name").textContent;
+
+          update();
+        });
+      });
+
+      root.querySelector("#oxy-st-reset").addEventListener("click", function () {
+        skills.fill(false);
+        message.textContent = "Skill Tree berhasil direset!";
+        update();
+      });
+
+      update();
+    })();
+  </script>
+</section>
+<!-- END OXYFANN SKILL TREE -->
 </body>
 </html>
 </body>
