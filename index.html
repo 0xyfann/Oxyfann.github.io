@@ -1185,6 +1185,349 @@
 })();
 </script>
 <!-- END OXYFANN BOOT SEQUENCE -->
+<!-- OXYFANN CYBER PUZZLE GAME -->
+<section id="oxy-hacker-game">
+  <div class="oxy-game-top">
+    <span class="oxy-game-light"></span>
+    OXYFANN // CYBER PUZZLE
+    <span class="oxy-game-status">GAME ONLINE</span>
+  </div>
+
+  <div class="oxy-game-heading">CODE BREAKER</div>
+  <p class="oxy-game-description">
+    Pecahkan kode rahasia 4 digit untuk membuka sistem virtual.
+  </p>
+
+  <div class="oxy-game-stats">
+    <div class="oxy-game-stat">
+      <span>SKOR</span>
+      <strong id="oxy-game-score">0</strong>
+    </div>
+    <div class="oxy-game-stat">
+      <span>KESEMPATAN</span>
+      <strong id="oxy-game-attempts">8</strong>
+    </div>
+    <div class="oxy-game-stat">
+      <span>LEVEL</span>
+      <strong id="oxy-game-level">1</strong>
+    </div>
+  </div>
+
+  <div class="oxy-game-terminal">
+    <div class="oxy-game-terminal-title">SYSTEM TERMINAL</div>
+    <div id="oxy-game-log" aria-live="polite">
+      > SYSTEM READY<br>
+      > KODE RAHASIA TERDIRI DARI 4 DIGIT<br>
+      > MASUKKAN ANGKA UNTUK MEMULAI
+    </div>
+  </div>
+
+  <form id="oxy-game-form">
+    <label for="oxy-game-input">MASUKKAN KODE 4 DIGIT</label>
+    <div class="oxy-game-input-row">
+      <input
+        id="oxy-game-input"
+        type="text"
+        inputmode="numeric"
+        pattern="[0-9]{4}"
+        maxlength="4"
+        placeholder="0000"
+        autocomplete="off"
+        required
+      >
+      <button type="submit" id="oxy-game-submit">CEK KODE</button>
+    </div>
+  </form>
+
+  <div id="oxy-game-feedback" aria-live="polite">
+    Menunggu input...
+  </div>
+
+  <button type="button" id="oxy-game-restart">
+    ↻ MULAI PERMAINAN
+  </button>
+
+  <p class="oxy-game-footnote">
+    SIMULASI GAME LOKAL • TIDAK TERHUBUNG KE SISTEM EKSTERNAL
+  </p>
+</section>
+
+<style>
+#oxy-hacker-game {
+  --oxy-game-green: #00ff88;
+  max-width: 720px;
+  margin: 28px auto;
+  padding: 18px;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: #b8ffd8;
+  background: #030906;
+  border: 1px solid #087a43;
+  border-radius: 14px;
+  font-family: monospace;
+  box-shadow: 0 0 22px #00ff8818;
+}
+#oxy-hacker-game * {
+  box-sizing: border-box;
+}
+#oxy-hacker-game .oxy-game-top {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #17442d;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+#oxy-hacker-game .oxy-game-light {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #00ff88;
+  box-shadow: 0 0 9px #00ff88;
+}
+#oxy-hacker-game .oxy-game-status {
+  margin-left: auto;
+  color: #00ff88;
+}
+#oxy-hacker-game .oxy-game-heading {
+  margin-top: 22px;
+  color: #00ff88;
+  font-size: clamp(25px, 6vw, 38px);
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-shadow: 0 0 14px #00ff8850;
+}
+#oxy-hacker-game .oxy-game-description {
+  color: #91b9a1;
+  font-size: 12px;
+  line-height: 1.7;
+}
+#oxy-hacker-game .oxy-game-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 20px 0;
+}
+#oxy-hacker-game .oxy-game-stat {
+  padding: 12px 6px;
+  text-align: center;
+  background: #07170e;
+  border: 1px solid #164d30;
+  border-radius: 8px;
+}
+#oxy-hacker-game .oxy-game-stat span {
+  display: block;
+  color: #81b999;
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+#oxy-hacker-game .oxy-game-stat strong {
+  display: block;
+  margin-top: 8px;
+  color: #00ff88;
+  font-size: 23px;
+}
+#oxy-hacker-game .oxy-game-terminal {
+  padding: 14px;
+  background: #000;
+  border: 1px solid #12532f;
+  border-radius: 8px;
+}
+#oxy-hacker-game .oxy-game-terminal-title {
+  margin-bottom: 12px;
+  color: #00ff88;
+  font-size: 11px;
+}
+#oxy-hacker-game #oxy-game-log {
+  min-height: 86px;
+  color: #91eeb7;
+  font-size: 11px;
+  line-height: 1.9;
+  overflow-wrap: anywhere;
+}
+#oxy-hacker-game #oxy-game-form {
+  margin-top: 20px;
+}
+#oxy-hacker-game #oxy-game-form label {
+  display: block;
+  margin-bottom: 9px;
+  color: #a5daba;
+  font-size: 11px;
+}
+#oxy-hacker-game .oxy-game-input-row {
+  display: flex;
+  gap: 8px;
+}
+#oxy-hacker-game #oxy-game-input {
+  width: 100%;
+  min-width: 0;
+  padding: 12px;
+  color: #00ff88;
+  background: #000;
+  border: 1px solid #167747;
+  border-radius: 7px;
+  font: bold 18px monospace;
+  letter-spacing: 5px;
+}
+#oxy-hacker-game button {
+  padding: 11px 13px;
+  color: #00ff88;
+  background: #071a10;
+  border: 1px solid #16864b;
+  border-radius: 7px;
+  font: bold 11px monospace;
+  cursor: pointer;
+}
+#oxy-hacker-game button:focus-visible,
+#oxy-hacker-game input:focus-visible {
+  outline: 2px solid #00ff88;
+  outline-offset: 3px;
+}
+#oxy-hacker-game #oxy-game-submit {
+  flex-shrink: 0;
+}
+#oxy-hacker-game #oxy-game-feedback {
+  min-height: 38px;
+  margin-top: 13px;
+  color: #00ff88;
+  font-size: 12px;
+  line-height: 1.6;
+}
+#oxy-hacker-game #oxy-game-restart {
+  width: 100%;
+  margin-top: 8px;
+}
+#oxy-hacker-game .oxy-game-footnote {
+  margin: 18px 0 0;
+  color: #548969;
+  font-size: 9px;
+  line-height: 1.7;
+  text-align: center;
+}
+@media (max-width: 380px) {
+  #oxy-hacker-game { padding: 12px; }
+  #oxy-hacker-game .oxy-game-input-row {
+    flex-direction: column;
+  }
+  #oxy-hacker-game #oxy-game-submit {
+    width: 100%;
+  }
+}
+</style>
+
+<script>
+(function () {
+  const root = document.getElementById("oxy-hacker-game");
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = "1";
+
+  const form = root.querySelector("#oxy-game-form");
+  const input = root.querySelector("#oxy-game-input");
+  const submit = root.querySelector("#oxy-game-submit");
+  const log = root.querySelector("#oxy-game-log");
+  const feedback = root.querySelector("#oxy-game-feedback");
+  const scoreDisplay = root.querySelector("#oxy-game-score");
+  const attemptsDisplay = root.querySelector("#oxy-game-attempts");
+  const levelDisplay = root.querySelector("#oxy-game-level");
+  const restart = root.querySelector("#oxy-game-restart");
+
+  let secret = "";
+  let score = 0;
+  let attempts = 8;
+  let level = 1;
+  let finished = false;
+
+  function newSecret() {
+    return String(Math.floor(Math.random() * 10000))
+      .padStart(4, "0");
+  }
+
+  function startGame() {
+    secret = newSecret();
+    attempts = 8;
+    finished = false;
+    input.disabled = false;
+    submit.disabled = false;
+    input.value = "";
+    attemptsDisplay.textContent = attempts;
+    levelDisplay.textContent = level;
+    scoreDisplay.textContent = score;
+    log.innerHTML =
+      "&gt; SYSTEM READY<br>" +
+      "&gt; KODE RAHASIA TERDIRI DARI 4 DIGIT<br>" +
+      "&gt; TEBAK KODE UNTUK MENYELESAIKAN LEVEL";
+    feedback.textContent = "Masukkan tebakan pertama kamu.";
+    input.focus({ preventScroll: true });
+  }
+
+  input.addEventListener("input", function () {
+    input.value = input.value.replace(/[^0-9]/g, "").slice(0, 4);
+  });
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    if (finished) return;
+
+    const guess = input.value;
+    if (!/^[0-9]{4}$/.test(guess)) {
+      feedback.textContent = "Masukkan tepat 4 digit angka.";
+      return;
+    }
+
+    attempts--;
+    attemptsDisplay.textContent = attempts;
+
+    if (guess === secret) {
+      const gained = attempts * 10 + level * 20;
+      score += gained;
+      scoreDisplay.textContent = score;
+      finished = true;
+      input.disabled = true;
+      submit.disabled = true;
+      levelDisplay.textContent = level;
+
+      log.innerHTML += "<br>&gt; ACCESS GRANTED<br>&gt; LEVEL COMPLETED";
+      feedback.textContent =
+        "BERHASIL! +" + gained + " poin. Tekan Mulai Permainan untuk lanjut.";
+      return;
+    }
+
+    let exact = 0;
+    for (let i = 0; i < 4; i++) {
+      if (guess[i] === secret[i]) exact++;
+    }
+
+    if (attempts === 0) {
+      finished = true;
+      input.disabled = true;
+      submit.disabled = true;
+      log.innerHTML += "<br>&gt; ATTEMPTS EXHAUSTED";
+      feedback.textContent =
+        "Kesempatan habis. Kode tadi: " + secret +
+        ". Tekan Mulai Permainan untuk mencoba lagi.";
+    } else {
+      const message = exact + " digit berada di posisi yang benar.";
+      log.innerHTML += "<br>&gt; INPUT: " + guess +
+        "<br>&gt; " + message.toUpperCase();
+      feedback.textContent =
+        message + " Sisa kesempatan: " + attempts + ".";
+    }
+
+    input.value = "";
+    input.focus({ preventScroll: true });
+  });
+
+  restart.addEventListener("click", function () {
+    if (finished) level++;
+    startGame();
+  });
+
+  startGame();
+})();
+</script>
+<!-- END OXYFANN CYBER PUZZLE GAME -->
 </body>
 </html>
 </body>
