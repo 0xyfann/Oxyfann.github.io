@@ -607,6 +607,228 @@
 </script>
 <!-- END OXYFANN COMMAND CENTER -->
   
+<!-- OXYFANN INTERACTIVE PARTICLES -->
+<section id="oxy-particles">
+  <div class="op-heading">
+    <span class="op-badge">INTERACTIVE FX</span>
+    <h2>Particle Touch</h2>
+    <p>Sentuh dan geser jarimu di area ini.</p>
+  </div>
+
+  <div class="op-stage" id="op-stage">
+    <canvas id="op-canvas"></canvas>
+    <div class="op-center" id="op-center">
+      <span>OXYFANN</span>
+      <small>TOUCH TO ACTIVATE</small>
+    </div>
+  </div>
+
+  <div class="op-bottom">
+    <span>PARTICLES: <b id="op-count">0</b></span>
+    <button id="op-toggle" type="button">PAUSE EFFECT</button>
+    <button id="op-clear" type="button">CLEAR</button>
+  </div>
+</section>
+
+<style>
+#oxy-particles {
+  max-width: 650px;
+  margin: 30px auto;
+  padding: 18px;
+  box-sizing: border-box;
+  color: #e5fffa;
+  background: #08121f;
+  border: 1px solid rgba(0,255,204,.3);
+  border-radius: 18px;
+  font-family: Arial,sans-serif;
+}
+#oxy-particles * { box-sizing: border-box; }
+#oxy-particles .op-heading { text-align: center; }
+#oxy-particles .op-badge {
+  color: #00ffcc;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+#oxy-particles h2 {
+  color: #00ffcc;
+  margin: 10px 0;
+  font-size: 25px;
+}
+#oxy-particles .op-heading p {
+  color: #93aabb;
+  font-size: 13px;
+}
+#oxy-particles .op-stage {
+  height: 270px;
+  position: relative;
+  overflow: hidden;
+  margin-top: 18px;
+  border: 1px solid rgba(0,255,204,.25);
+  border-radius: 12px;
+  background: radial-gradient(ellipse at center,#102b3a,#050b14 75%);
+  touch-action: pan-y;
+}
+#oxy-particles #op-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+#oxy-particles .op-center {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  color: rgba(0,255,204,.65);
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 4px;
+}
+#oxy-particles .op-center small {
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+#oxy-particles .op-bottom {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 15px;
+  color: #8ba5b6;
+  font-size: 10px;
+}
+#oxy-particles .op-bottom b {
+  color: #00ffcc;
+}
+#oxy-particles .op-bottom button {
+  padding: 9px 10px;
+  border: 1px solid #00bfa5;
+  border-radius: 7px;
+  background: #0b202b;
+  color: #00ffcc;
+  font-size: 10px;
+  cursor: pointer;
+}
+#oxy-particles #op-toggle { margin-left: auto; }
+@media(prefers-reduced-motion:reduce) {
+  #oxy-particles .op-center { letter-spacing: 2px; }
+}
+</style>
+
+<script>
+(function () {
+  const root = document.getElementById("oxy-particles");
+  const stage = document.getElementById("op-stage");
+  const canvas = document.getElementById("op-canvas");
+  if (!root || !stage || !canvas || root.dataset.ready) return;
+  root.dataset.ready = "yes";
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  const countLabel = document.getElementById("op-count");
+  const toggle = document.getElementById("op-toggle");
+  const clear = document.getElementById("op-clear");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  let particles = [];
+  let running = true;
+  let width = 0, height = 0, last = 0, frame = 0;
+
+  function resize() {
+    const rect = stage.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    width = rect.width;
+    height = rect.height;
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function burst(x, y) {
+    if (!running) return;
+    for (let i = 0; i < 5; i++) {
+      if (particles.length >= 100) particles.shift();
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 0.5 + Math.random() * 2.2;
+      particles.push({
+        x, y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 1,
+        size: 1 + Math.random() * 2.5
+      });
+    }
+    countLabel.textContent = particles.length;
+  }
+
+  stage.addEventListener("pointerdown", function (e) {
+    const rect = stage.getBoundingClientRect();
+    burst(e.clientX - rect.left, e.clientY - rect.top);
+  });
+
+  stage.addEventListener("pointermove", function (e) {
+    if (e.buttons === 0 && e.pointerType !== "touch") return;
+    const rect = stage.getBoundingClientRect();
+    burst(e.clientX - rect.left, e.clientY - rect.top);
+  });
+
+  function draw(time) {
+    frame = requestAnimationFrame(draw);
+    if (!running || reduced.matches) return;
+    if (time - last < 32) return;
+    last = time;
+
+    ctx.clearRect(0, 0, width, height);
+
+    particles = particles.filter(p => p.life > 0.03);
+    for (const p of particles) {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vx *= 0.985;
+      p.vy *= 0.985;
+      p.life *= 0.965;
+
+      ctx.globalAlpha = p.life;
+      ctx.fillStyle = "#00ffcc";
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = "#00ffcc";
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    ctx.shadowBlur = 0;
+    countLabel.textContent = particles.length;
+  }
+
+  toggle.addEventListener("click", function () {
+    running = !running;
+    toggle.textContent = running ? "PAUSE EFFECT" : "RESUME EFFECT";
+    if (!running) {
+      particles = [];
+      ctx.clearRect(0, 0, width, height);
+      countLabel.textContent = "0";
+    }
+  });
+
+  clear.addEventListener("click", function () {
+    particles = [];
+    ctx.clearRect(0, 0, width, height);
+    countLabel.textContent = "0";
+  });
+
+  resize();
+  window.addEventListener("resize", resize);
+  if (!reduced.matches) frame = requestAnimationFrame(draw);
+})();
+</script>
+<!-- END OXYFANN INTERACTIVE PARTICLES -->
+  
 </body>
 </html>
 </body>
