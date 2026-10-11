@@ -2346,6 +2346,445 @@
   </script>
 </section>
 <!-- END OXYFANN SKILL TREE -->
+<!-- OXYFANN ACHIEVEMENT SYSTEM -->
+<section id="oxy-achievements">
+  <style>
+    #oxy-achievements {
+      max-width: 650px;
+      margin: 35px auto;
+      padding: 16px;
+      color: #e8faff;
+      font-family: Arial, sans-serif;
+    }
+
+    #oxy-achievements * {
+      box-sizing: border-box;
+    }
+
+    #oxy-achievements .oa-panel {
+      padding: 20px;
+      border: 1px solid #00eaff80;
+      border-radius: 18px;
+      background: linear-gradient(145deg, #071323, #10243a);
+      box-shadow: 0 0 20px #00d9ff18;
+    }
+
+    #oxy-achievements .oa-title {
+      margin: 0;
+      text-align: center;
+      color: #00eaff;
+      font-size: 23px;
+    }
+
+    #oxy-achievements .oa-subtitle {
+      margin: 8px 0 22px;
+      text-align: center;
+      color: #8ca9bd;
+      font-size: 12px;
+    }
+
+    #oxy-achievements .oa-rank {
+      padding: 16px;
+      border: 1px solid #00eaff55;
+      border-radius: 12px;
+      background: #00eaff09;
+    }
+
+    #oxy-achievements .oa-rank-name {
+      color: #00eaff;
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 6px;
+    }
+
+    #oxy-achievements .oa-muted {
+      color: #8ca9bd;
+      font-size: 12px;
+    }
+
+    #oxy-achievements .oa-progress {
+      height: 9px;
+      margin-top: 12px;
+      overflow: hidden;
+      border-radius: 20px;
+      background: #253b4b;
+    }
+
+    #oxy-achievements .oa-fill {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #00eaff, #9b5cff);
+      transition: width .3s ease;
+    }
+
+    #oxy-achievements .oa-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0 22px;
+    }
+
+    #oxy-achievements .oa-stat {
+      padding: 13px;
+      border: 1px solid #29465a;
+      border-radius: 10px;
+    }
+
+    #oxy-achievements .oa-stat strong {
+      display: block;
+      margin-top: 6px;
+      color: #00eaff;
+      font-size: 23px;
+    }
+
+    #oxy-achievements .oa-heading {
+      margin: 20px 0 12px;
+      font-size: 15px;
+    }
+
+    #oxy-achievements .oa-badges {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    #oxy-achievements .oa-badge {
+      padding: 13px 9px;
+      text-align: center;
+      border: 1px solid #29465a;
+      border-radius: 11px;
+      background: #071522;
+    }
+
+    #oxy-achievements .oa-badge-icon {
+      font-size: 27px;
+      filter: grayscale(1);
+      opacity: .45;
+    }
+
+    #oxy-achievements .oa-badge.oa-earned {
+      border-color: #00eaff;
+      background: #00eaff0b;
+    }
+
+    #oxy-achievements .oa-earned .oa-badge-icon {
+      filter: none;
+      opacity: 1;
+    }
+
+    #oxy-achievements .oa-badge-name {
+      margin: 8px 0 5px;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    #oxy-achievements .oa-badge-desc {
+      color: #8ca9bd;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    #oxy-achievements .oa-mission {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 0;
+      border-bottom: 1px solid #29465a;
+    }
+
+    #oxy-achievements .oa-mission-text {
+      flex: 1;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    #oxy-achievements .oa-button {
+      padding: 10px 12px;
+      border: 1px solid #00eaff;
+      border-radius: 8px;
+      background: #00eaff10;
+      color: #00eaff;
+      font-weight: bold;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    #oxy-achievements .oa-button:disabled {
+      color: #65ffb0;
+      border-color: #65ffb0;
+      cursor: default;
+    }
+
+    #oxy-achievements .oa-message {
+      min-height: 18px;
+      margin-top: 14px;
+      text-align: center;
+      color: #65ffb0;
+      font-size: 12px;
+    }
+
+    #oxy-achievements .oa-reset {
+      width: 100%;
+      margin-top: 16px;
+      padding: 10px;
+      border: 1px solid #8b5cf6;
+      border-radius: 8px;
+      background: #8b5cf610;
+      color: #c5b4ff;
+      cursor: pointer;
+    }
+
+    @media (max-width: 360px) {
+      #oxy-achievements .oa-panel {
+        padding: 13px;
+      }
+
+      #oxy-achievements .oa-badges {
+        gap: 7px;
+      }
+    }
+  </style>
+
+  <div class="oa-panel">
+    <h2 class="oa-title">🏆 CYBER ACHIEVEMENTS</h2>
+    <p class="oa-subtitle">OXYFANN // PROGRESSION SYSTEM</p>
+
+    <div class="oa-rank">
+      <div class="oa-muted">CURRENT CYBER RANK</div>
+      <div class="oa-rank-name" id="oa-rank">ROOKIE</div>
+      <div class="oa-muted" id="oa-next">Kumpulkan XP untuk naik rank.</div>
+      <div class="oa-progress">
+        <div class="oa-fill" id="oa-fill"></div>
+      </div>
+      <div class="oa-muted" id="oa-xp-progress" style="margin-top:8px">
+        0 / 100 XP menuju rank berikutnya
+      </div>
+    </div>
+
+    <div class="oa-stats">
+      <div class="oa-stat">
+        <span class="oa-muted">TOTAL XP</span>
+        <strong id="oa-xp">0</strong>
+      </div>
+      <div class="oa-stat">
+        <span class="oa-muted">BADGES EARNED</span>
+        <strong id="oa-count">0 / 5</strong>
+      </div>
+    </div>
+
+    <h3 class="oa-heading">✦ ACHIEVEMENT BADGES</h3>
+    <div class="oa-badges">
+      <div class="oa-badge" data-badge="first">
+        <div class="oa-badge-icon">⚡</div>
+        <div class="oa-badge-name">First Mission</div>
+        <div class="oa-badge-desc">Selesaikan misi pertama.</div>
+      </div>
+      <div class="oa-badge" data-badge="explorer">
+        <div class="oa-badge-icon">🌐</div>
+        <div class="oa-badge-name">Explorer</div>
+        <div class="oa-badge-desc">Selesaikan 2 misi.</div>
+      </div>
+      <div class="oa-badge" data-badge="veteran">
+        <div class="oa-badge-icon">🛡️</div>
+        <div class="oa-badge-name">Cyber Veteran</div>
+        <div class="oa-badge-desc">Selesaikan 3 misi.</div>
+      </div>
+      <div class="oa-badge" data-badge="elite">
+        <div class="oa-badge-icon">💎</div>
+        <div class="oa-badge-name">Elite Hacker</div>
+        <div class="oa-badge-desc">Selesaikan 4 misi.</div>
+      </div>
+      <div class="oa-badge" data-badge="legend">
+        <div class="oa-badge-icon">👑</div>
+        <div class="oa-badge-name">Cyber Legend</div>
+        <div class="oa-badge-desc">Selesaikan semua misi.</div>
+      </div>
+    </div>
+
+    <h3 class="oa-heading">🎯 DAILY-STYLE MISSIONS</h3>
+
+    <div class="oa-mission">
+      <div class="oa-mission-text">
+        <strong>Mission 01 — Initialization</strong><br>
+        <span class="oa-muted">Selesaikan misi pertama · +50 XP</span>
+      </div>
+      <button class="oa-button" data-mission="0">CLAIM</button>
+    </div>
+
+    <div class="oa-mission">
+      <div class="oa-mission-text">
+        <strong>Mission 02 — Explorer</strong><br>
+        <span class="oa-muted">Lanjutkan progres · +75 XP</span>
+      </div>
+      <button class="oa-button" data-mission="1">CLAIM</button>
+    </div>
+
+    <div class="oa-mission">
+      <div class="oa-mission-text">
+        <strong>Mission 03 — Specialist</strong><br>
+        <span class="oa-muted">Terus kumpulkan XP · +100 XP</span>
+      </div>
+      <button class="oa-button" data-mission="2">CLAIM</button>
+    </div>
+
+    <div class="oa-mission">
+      <div class="oa-mission-text">
+        <strong>Mission 04 — Elite</strong><br>
+        <span class="oa-muted">Hampir mencapai puncak · +125 XP</span>
+      </div>
+      <button class="oa-button" data-mission="3">CLAIM</button>
+    </div>
+
+    <div class="oa-mission">
+      <div class="oa-mission-text">
+        <strong>Mission 05 — Legend</strong><br>
+        <span class="oa-muted">Selesaikan seluruh jalur · +150 XP</span>
+      </div>
+      <button class="oa-button" data-mission="4">CLAIM</button>
+    </div>
+
+    <div class="oa-message" id="oa-message" role="status">
+      Sistem siap. Pilih misi untuk mendapatkan XP.
+    </div>
+
+    <button class="oa-reset" id="oa-reset" type="button">
+      RESET ACHIEVEMENTS
+    </button>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.getElementById("oxy-achievements");
+      if (!root || root.dataset.initialized === "yes") return;
+      root.dataset.initialized = "yes";
+
+      const storageKey = "oxyfann_achievement_v1";
+      const rewards = [50, 75, 100, 125, 150];
+      let state = { xp: 0, missions: [false, false, false, false, false] };
+
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey));
+        if (
+          saved &&
+          Number.isFinite(saved.xp) &&
+          saved.xp >= 0 &&
+          Array.isArray(saved.missions) &&
+          saved.missions.length === 5 &&
+          saved.missions.every(v => typeof v === "boolean")
+        ) {
+          state = saved;
+        }
+      } catch (e) {
+        // Tetap berjalan jika penyimpanan browser tidak tersedia.
+      }
+
+      const ranks = [
+        { name: "ROOKIE", min: 0 },
+        { name: "SCOUT", min: 50 },
+        { name: "AGENT", min: 125 },
+        { name: "ELITE", min: 225 },
+        { name: "CYBER LEGEND", min: 350 }
+      ];
+
+      const message = root.querySelector("#oa-message");
+
+      function save() {
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(state));
+        } catch (e) {
+          message.textContent =
+            "Progres aktif, tetapi browser tidak mengizinkan penyimpanan.";
+        }
+      }
+
+      function render() {
+        const xp = state.xp;
+        let current = 0;
+
+        ranks.forEach(function (rank, i) {
+          if (xp >= rank.min) current = i;
+        });
+
+        const next = ranks[current + 1];
+        root.querySelector("#oa-rank").textContent = ranks[current].name;
+        root.querySelector("#oa-xp").textContent = xp;
+        root.querySelector("#oa-count").textContent =
+          state.missions.filter(Boolean).length + " / 5";
+
+        if (next) {
+          const start = ranks[current].min;
+          const progress = xp - start;
+          const needed = next.min - start;
+
+          root.querySelector("#oa-next").textContent =
+            "Target berikutnya: " + next.name;
+          root.querySelector("#oa-xp-progress").textContent =
+            progress + " / " + needed + " XP menuju rank berikutnya";
+          root.querySelector("#oa-fill").style.width =
+            Math.min(100, progress / needed * 100) + "%";
+        } else {
+          root.querySelector("#oa-next").textContent =
+            "Rank tertinggi berhasil dicapai!";
+          root.querySelector("#oa-xp-progress").textContent =
+            "MAX RANK REACHED";
+          root.querySelector("#oa-fill").style.width = "100%";
+        }
+
+        const completed = state.missions.filter(Boolean).length;
+        const earned = [
+          completed >= 1,
+          completed >= 2,
+          completed >= 3,
+          completed >= 4,
+          completed >= 5
+        ];
+
+        root.querySelectorAll("[data-badge]").forEach(function (badge, i) {
+          badge.classList.toggle("oa-earned", earned[i]);
+        });
+
+        root.querySelectorAll("[data-mission]").forEach(function (button, i) {
+          button.disabled = state.missions[i];
+          button.textContent = state.missions[i] ? "CLAIMED" : "CLAIM";
+        });
+      }
+
+      root.querySelectorAll("[data-mission]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          const index = Number(button.dataset.mission);
+          if (state.missions[index]) return;
+
+          state.missions[index] = true;
+          state.xp += rewards[index];
+
+          save();
+          render();
+
+          message.textContent =
+            "Misi selesai! +" + rewards[index] + " XP berhasil didapatkan.";
+        });
+      });
+
+      root.querySelector("#oa-reset").addEventListener("click", function () {
+        if (!window.confirm("Yakin ingin menghapus progres Achievement System?")) {
+          return;
+        }
+
+        state = {
+          xp: 0,
+          missions: [false, false, false, false, false]
+        };
+
+        save();
+        render();
+        message.textContent = "Progres Achievement berhasil direset.";
+      });
+
+      render();
+    })();
+  </script>
+</section>
+<!-- END OXYFANN ACHIEVEMENT SYSTEM -->
 </body>
 </html>
 </body>
