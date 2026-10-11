@@ -374,6 +374,239 @@
 </script>
 <!-- END OXYFANN SYSTEM MONITOR -->
   
+<!-- OXYFANN COMMAND CENTER -->
+<section id="oxy-command-center">
+  <div class="occ-head">
+    <span class="occ-indicator"></span>
+    <div>
+      <h2>COMMAND CENTER</h2>
+      <p>OXYFANN CONTROL PANEL v1.0</p>
+    </div>
+  </div>
+
+  <div class="occ-preview" id="occ-preview">
+    <span class="occ-preview-label">SYSTEM PREVIEW</span>
+    <div class="occ-preview-title">WELCOME, OPERATOR</div>
+    <p>Website interface ready.</p>
+    <span class="occ-preview-status">● ALL SYSTEMS READY</span>
+  </div>
+
+  <div class="occ-label">ACCENT COLOR</div>
+  <div class="occ-colors">
+    <button type="button" data-color="#00ffcc"
+      aria-label="Cyan" class="occ-color occ-selected"
+      style="--occ-color:#00ffcc"></button>
+    <button type="button" data-color="#8b5cf6"
+      aria-label="Ungu" class="occ-color"
+      style="--occ-color:#8b5cf6"></button>
+    <button type="button" data-color="#38bdf8"
+      aria-label="Biru" class="occ-color"
+      style="--occ-color:#38bdf8"></button>
+    <button type="button" data-color="#fb7185"
+      aria-label="Merah muda" class="occ-color"
+      style="--occ-color:#fb7185"></button>
+  </div>
+
+  <div class="occ-controls">
+    <button type="button" id="occ-glow">
+      ✦ Toggle Glow
+    </button>
+    <button type="button" id="occ-info">
+      ⓘ Website Info
+    </button>
+  </div>
+
+  <div class="occ-info-box" id="occ-info-box" hidden>
+    <strong>OXYFANN DIGITAL SPACE</strong>
+    <p>Personal website hosted with GitHub Pages.</p>
+    <p>Mode: <span id="occ-mode">Glow ON</span></p>
+  </div>
+
+  <div class="occ-footer">
+    <span>LOCAL CONTROLS</span>
+    <span>● READY</span>
+  </div>
+</section>
+
+<style>
+#oxy-command-center {
+  --occ-accent: #00ffcc;
+  max-width: 650px;
+  margin: 30px auto;
+  padding: 20px;
+  box-sizing: border-box;
+  color: #e5f7ff;
+  background: linear-gradient(145deg,#08111e,#101b2a);
+  border: 1px solid color-mix(in srgb,var(--occ-accent) 35%,transparent);
+  border-radius: 18px;
+  font-family: Arial,sans-serif;
+  box-shadow: 0 0 22px rgba(0,0,0,.18);
+}
+#oxy-command-center * {
+  box-sizing: border-box;
+}
+#oxy-command-center .occ-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+#oxy-command-center .occ-indicator {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--occ-accent);
+  box-shadow: 0 0 12px var(--occ-accent);
+}
+#oxy-command-center h2 {
+  margin: 0;
+  color: var(--occ-accent);
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+#oxy-command-center .occ-head p {
+  margin: 5px 0 0;
+  color: #8da6ba;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+#oxy-command-center .occ-preview {
+  margin: 22px 0;
+  padding: 18px 12px;
+  text-align: center;
+  border: 1px solid color-mix(in srgb,var(--occ-accent) 35%,transparent);
+  border-radius: 12px;
+  background: rgba(255,255,255,.025);
+  transition: box-shadow .25s;
+}
+#oxy-command-center.occ-glow .occ-preview {
+  box-shadow: 0 0 22px color-mix(in srgb,var(--occ-accent) 20%,transparent);
+}
+#oxy-command-center .occ-preview-label,
+#oxy-command-center .occ-label {
+  color: #8da6ba;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+#oxy-command-center .occ-preview-title {
+  margin-top: 15px;
+  color: var(--occ-accent);
+  font-size: 19px;
+  font-weight: bold;
+}
+#oxy-command-center .occ-preview p {
+  color: #b0c3d1;
+  font-size: 13px;
+}
+#oxy-command-center .occ-preview-status {
+  color: var(--occ-accent);
+  font-size: 10px;
+}
+#oxy-command-center .occ-colors {
+  display: flex;
+  gap: 13px;
+  margin: 12px 0 22px;
+}
+#oxy-command-center .occ-color {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 3px solid var(--occ-color);
+  background: var(--occ-color);
+  cursor: pointer;
+}
+#oxy-command-center .occ-color.occ-selected {
+  outline: 2px solid white;
+  outline-offset: 3px;
+}
+#oxy-command-center .occ-controls {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 10px;
+}
+#oxy-command-center .occ-controls button {
+  min-width: 0;
+  padding: 12px 8px;
+  border: 1px solid var(--occ-accent);
+  border-radius: 9px;
+  background: rgba(255,255,255,.025);
+  color: var(--occ-accent);
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+#oxy-command-center .occ-info-box {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.1);
+  font-size: 12px;
+  line-height: 1.7;
+}
+#oxy-command-center .occ-info-box strong {
+  color: var(--occ-accent);
+}
+#oxy-command-center .occ-info-box p {
+  color: #b0c3d1;
+}
+#oxy-command-center .occ-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  color: #8da6ba;
+  font-size: 10px;
+}
+#oxy-command-center .occ-footer span:last-child {
+  color: var(--occ-accent);
+}
+@media(max-width:360px) {
+  #oxy-command-center { padding: 14px; }
+}
+</style>
+
+<script>
+(function () {
+  const panel = document.getElementById("oxy-command-center");
+  if (!panel || panel.dataset.ready === "yes") return;
+  panel.dataset.ready = "yes";
+
+  const colors = panel.querySelectorAll(".occ-color");
+
+  colors.forEach(function (button) {
+    button.addEventListener("click", function () {
+      panel.style.setProperty("--occ-accent", button.dataset.color);
+
+      colors.forEach(function (item) {
+        item.classList.remove("occ-selected");
+      });
+      button.classList.add("occ-selected");
+    });
+  });
+
+  const glowButton = panel.querySelector("#occ-glow");
+  const modeText = panel.querySelector("#occ-mode");
+
+  panel.classList.add("occ-glow");
+
+  glowButton.addEventListener("click", function () {
+    const active = panel.classList.toggle("occ-glow");
+    modeText.textContent = active ? "Glow ON" : "Glow OFF";
+    glowButton.textContent = active ? "✦ Toggle Glow" : "✧ Toggle Glow";
+  });
+
+  panel.querySelector("#occ-info").addEventListener("click", function () {
+    const info = panel.querySelector("#occ-info-box");
+    info.hidden = !info.hidden;
+    this.textContent = info.hidden ? "ⓘ Website Info" : "Close Info";
+  });
+})();
+</script>
+<!-- END OXYFANN COMMAND CENTER -->
+  
 </body>
 </html>
 </body>
